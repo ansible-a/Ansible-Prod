@@ -17,7 +17,7 @@
     apt:
       update_cache: yes
       upgrade: dist
-    when: ansible_facts['os_family'] == 'Debian' and ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version'] == '12'  # Replace with your Debian version      
+    when: ansible_distribution in ["Debian", "Ubuntu"] 
       
   - name: Checking reboot if needed
     tags: always
@@ -42,4 +42,14 @@
     loop:
       - "source ~/.bash_prompt"
       - "alias c='clear'"
+
+  - name: Install fail2ban and Qemu-Guest-Agent.
+    tags: always
+    package:
+      name:
+#        - fail2ban
+        - qemu-guest-agent
+      state: latest
+      update_cache: yes
+
 
